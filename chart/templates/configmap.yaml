@@ -1,0 +1,18 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: worker-defaults
+data:
+  MINIO_ENDPOINT: {{ .Values.configMap.minioEndpoint }}
+  MINIO_ACCESS_KEY: {{ .Values.configMap.minioAccessKey }}
+  MINIO_SECRET_KEY: {{ .Values.configMap.minioSecretKey }}
+  BUCKET_NAME: {{ .Values.configMap.bucketName }}
+  REDIS_HOST: {{ .Values.configMap.redisHost }}
+  POSTGRES_HOST: {{ .Values.configMap.postgresHost }}
+  POSTGRES_DB: {{ .Values.configMap.postgresDb }}
+  POSTGRES_USER: {{ .Values.configMap.postgresUser }}
+  POSTGRES_PASSWORD: {{ .Values.configMap.postgresPassword }}
+  SMTP_HOST: "smtp.gmail.com"
+  SMTP_USER: ""
+  SMTP_PASSWORD: ""
+  SMTP_FROM: ""

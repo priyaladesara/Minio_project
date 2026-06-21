@@ -1,0 +1,11 @@
+
+## Step 4 — Update `requirements.txt`
+minio
+fastapi
+uvicorn
+python-multipart
+pandas
+openpyxl
+pyarrow
+redis
+psycopg2-binary

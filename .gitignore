@@ -1,0 +1,57 @@
+# Python cache
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environment
+venv/
+env/
+.venv/
+
+# Environment variables / secrets
+.env
+.env.*
+
+# VS Code
+.vscode/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+logs/
+
+# Database files
+*.db
+*.sqlite
+*.sqlite3
+
+# MinIO local storage/data (if created locally)
+data/
+minio_data/
+*.minio/
+
+# CSV generated files (if these are outputs)
+csv/*.csv
+
+# Temporary files
+tmp/
+temp/
+*.tmp
+
+# Docker
+docker-compose.override.yml
+
+# Jupyter (if any)
+.ipynb_checkpoints/
+
+# Build/cache
+*.egg-info/
+dist/
+build/
+
+# Coverage/testing
+.coverage
+.pytest_cache/

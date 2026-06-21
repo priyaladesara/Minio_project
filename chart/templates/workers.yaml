@@ -1,0 +1,48 @@
+{{- range .Values.workers }}
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .name }}-worker
+spec:
+  selector:
+    matchLabels:
+      app: {{ .name }}-worker
+  template:
+    metadata:
+      labels:
+        app: {{ .name }}-worker
+    spec:
+      serviceAccountName: {{ $.Values.serviceAccountName }}
+      containers:
+        - name: {{ .name }}-worker
+          image: {{ $.Values.defaults.image }}
+          imagePullPolicy: {{ $.Values.defaults.imagePullPolicy }}
+          command: ["python", "-u", "queue_worker.py"]
+          envFrom:
+            - configMapRef:
+                name: worker-defaults
+          env:
+            - name: QUEUE_NAME
+              value: {{ .queue | quote }}
+            - name: MODULE_NAME
+              value: {{ .name | quote }}
+---
+apiVersion: keda.sh/v1alpha1
+kind: ScaledObject
+metadata:
+  name: {{ .name }}-worker-scaler
+spec:
+  scaleTargetRef:
+    name: {{ .name }}-worker
+  minReplicaCount: 0
+  maxReplicaCount: {{ .maxReplicas | default $.Values.defaults.maxReplicas }}
+  pollingInterval: {{ .pollingInterval | default $.Values.defaults.pollingInterval }}
+  cooldownPeriod: {{ .cooldownPeriod | default $.Values.defaults.cooldownPeriod }}
+  triggers:
+    - type: redis
+      metadata:
+        address: redis.{{ $.Release.Namespace }}.svc.cluster.local:6379
+        listName: {{ .queue }}
+        listLength: "1"
+{{- end }}

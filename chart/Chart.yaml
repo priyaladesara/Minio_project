@@ -1,0 +1,4 @@
+apiVersion: v2
+name: minio-project
+description: MinIO KEDA worker chart
+version: 1.0.0

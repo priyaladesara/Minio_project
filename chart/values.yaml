@@ -1,0 +1,33 @@
+serviceAccountName: minio-project-sa
+
+configMap:
+  minioEndpoint: "minio:9000"
+  minioAccessKey: "minioadmin"
+  minioSecretKey: "minioadmin"
+  bucketName: "my-bucket"
+  redisHost: "redis"
+  postgresHost: "hostname"
+  postgresDb: "actualdb"
+  postgresUser: "admin"
+  postgresPassword: "actualpassword"
+
+defaults:
+  image: minio-project:latest
+  imagePullPolicy: Never
+  maxReplicas: 10
+  pollingInterval: 15
+  cooldownPeriod: 120
+
+workers:
+  - name: sort
+    queue: sort_queue
+  - name: compress
+    queue: compress_queue
+  - name: summarize
+    queue: summarize_queue
+  - name: convert
+    queue: convert_queue
+    maxReplicas: 3
+  - name: clean         
+    queue: clean_queue
+    maxReplicas: 10  
